@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _getPlace();
+    // _getPlace();
     super.initState();
   }
 
