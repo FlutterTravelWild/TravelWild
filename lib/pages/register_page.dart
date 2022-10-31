@@ -192,7 +192,7 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         decoration: InputDecoration(
-          icon: Icon(Icons.lock_outline),
+          icon:  Icon(  Icons.lock_outline),
           border: OutlineInputBorder(
               borderRadius:
                   const BorderRadius.all(const Radius.circular(80.0))),
@@ -350,11 +350,11 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 20,
               ),
-              Text("Fecha de nacimiento"),
+             const Text("Fecha de nacimiento"),
               dateF,
-              Text("Genero"),
+            const  Text("Genero"),
               Row(children: [male, female]),
-              Text("Turismo"),
+            const  Text("Turismo"),
               rel,
               gast,
               cult,
