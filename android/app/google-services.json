@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "6758141895",
+    "project_id": "fluttertravelwild",
+    "storage_bucket": "fluttertravelwild.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6758141895:android:f06a7f8ca4336174fed3e2",
+        "android_client_info": {
+          "package_name": "com.example.fluttertravelwild"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6758141895-v1j3rp4vah62duas9haj024hrof97ift.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD_3KnJYbqRE0YpEeUAMIY8OFy7B30Ghk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6758141895-v1j3rp4vah62duas9haj024hrof97ift.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "6758141895-6rn954mbhkbjnn85hnqgh1jv1amc4e5u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fluttertravelwild"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

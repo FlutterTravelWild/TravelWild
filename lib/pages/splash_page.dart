@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertravelwild/pages/HomePage.dart';
 import 'package:fluttertravelwild/pages/Login_page.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({super.key});
+  // const Splash({super.key});
+  const Splash({Key? key}) : super(key: key);
 
   @override
   State<Splash> createState() => _SplashState();
@@ -15,12 +18,28 @@ class _SplashState extends State<Splash> {
   _closeSplash();
   super.initState();
   }
+  // Future<void> _closeSplash() async {
+  //   Future.delayed(const Duration(seconds: 3), () async {
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => LoginPage()));
+  //   });
+  // }
+
   Future<void> _closeSplash() async {
-    Future.delayed(const Duration(seconds: 3), () async {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Future.delayed(const Duration(seconds: 2), () async {
+      var currentUser = FirebaseAuth.instance.currentUser;
+      
+      if (currentUser == null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+   
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

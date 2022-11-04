@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertravelwild/data/firebase_api.dart';
 import 'package:fluttertravelwild/pages/HomePage.dart';
 import 'package:fluttertravelwild/pages/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,11 +20,11 @@ class _LoginPageState extends State<LoginPage> {
   final _password = TextEditingController();
   late bool _passwordVisible;
   User Userload = User.Empty();
-
+  final FirebaseApi _firebaseApi = FirebaseApi();
   @override
   void initState() {
     _passwordVisible = false;
-    _getUser();
+    // _getUser();
     super.initState();
   }
 
@@ -43,22 +44,49 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  void _validateUser() {
-    print("validate");
-    print("user email ${Userload.email}");
-    print("input email ${_email.text}");
-    print("User password ${Userload.password}");
-    print("inpur password ${_password.text}");
-    print("final");
+  // void _validateUser() {
+  //   print("validate");
+  //   print("user email ${Userload.email}");
+  //   print("input email ${_email.text}");
+  //   print("User password ${Userload.password}");
+  //   print("inpur password ${_password.text}");
+  //   print("final");
 
-    if (_email.text == Userload.email && _password.text == Userload.password) {
-      print("hola");
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+  //   if (_email.text == Userload.email && _password.text == Userload.password) {
+  //     print("hola");
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => const HomePage()));
+  //   } else {
+  //     //  Userload._showMsg("Contraseña invalida");
+  //     print("object");
+  //     _showMsg("Email or password incorrect");
+  //   }
+  // }
+  void _validateUser() async {
+    if (_email.text.isEmpty || _password.text.isEmpty) {
+      _showMsg("Emply values");
     } else {
-      //  Userload._showMsg("Contraseña invalida");
-      print("object");
-      _showMsg("Email or password incorrect");
+      var result = await _firebaseApi.logInUser(_email.text, _password.text);
+      String msg = "";
+
+      if (result == "invalid-email") {
+        msg = "invalid-email";
+      } else if (result == "weak-password") {
+        msg = "weak-password min 6 digit";
+      } else if (result == "network-request-failed") {
+        msg = "not connection a network";
+      } else if (result == "user-not-found") {
+        msg = "user-not-found";
+      } else if (result == "unknown") {
+        msg = "user-not-found";
+      } else {
+        msg = "connection success";
+        print("entro");
+        print(result);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+      _showMsg(msg);
     }
   }
 
@@ -99,19 +127,19 @@ class _LoginPageState extends State<LoginPage> {
     final passwordL = TextField(
         controller: _password,
         keyboardType: TextInputType.visiblePassword,
-        obscureText: _passwordVisible,
+        obscureText: true,
         decoration: InputDecoration(
           icon: Icon(Icons.lock_open_outlined),
           border: OutlineInputBorder(
               borderRadius:
                   const BorderRadius.all(const Radius.circular(80.0))),
           hintText: 'Password',
-          suffix: InkWell(
-            onTap: _togglePasswordView,
-            child: Icon(
-              _passwordVisible ? Icons.visibility_off : Icons.visibility,
-            ),
-          ),
+          // suffix: InkWell(
+          //   onTap: _togglePasswordView,
+          //   child: Icon(
+          //     _passwordVisible ? Icons.visibility_off : Icons.visibility,
+          //   ),
+          // ),
         ));
 
     final loginBtn = ElevatedButton(

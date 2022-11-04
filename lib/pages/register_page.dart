@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertravelwild/data/Preferences.dart';
+
+import 'package:fluttertravelwild/data/firebase_api.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertravelwild/pages/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:convert';
 import '../models/User.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -33,6 +34,8 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _parquestematicos = false;
   bool _aventura = false;
   String buttonMsg = "Fecha de nacimiento";
+
+  final FirebaseApi _firebaseApi = FirebaseApi();
   @override
   void initState() {
     _passwordVisible = false;
@@ -79,14 +82,38 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  void _saveUser(User user) async {
+    var result = await _firebaseApi.createUser(user);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+
   void _registerUser(User user) async {
     //  local store
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("user", jsonEncode(user));
-    // print("SaveUser");
-    String json = jsonEncode(user);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.setString("user", jsonEncode(user));
+    // // print("SaveUser");
+    // String json = jsonEncode(user);
 
-    print(json);
+    // print(json);
+    // Firebase
+    var result = await _firebaseApi.registerUser(user.email, user.password);
+    String msg = "";
+    if (result == "invalid-email") {
+      msg = "invalid-email";
+    } else if (result == "weak-password") {
+      msg = "weak-password min 6 digit";
+    } else if (result == "email-already-in-use") {
+      msg = "email in use";
+    } else if (result == "network-request-failed") {
+      msg = "not connection a network";
+    } else {
+      msg = " success";
+      // print(result);
+      user.uid = result;
+      _saveUser(user);
+    }
+    _showMsg(msg);
   }
 
   void _onRegisterButtonClicked() {
@@ -114,13 +141,11 @@ class _RegisterPageState extends State<RegisterPage> {
             _password.text);
         print(_data);
 
-
         // saveUser(user);
         _registerUser(user);
         // Navigator.pushReplacement(
         //     context, MaterialPageRoute(builder: (context) => LoginPage()));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+
       } else {
         // print("object");
         _showMsg("Las contreñas deben ser iguales");
@@ -192,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         decoration: InputDecoration(
-          icon:  Icon(  Icons.lock_outline),
+          icon: Icon(Icons.lock_outline),
           border: OutlineInputBorder(
               borderRadius:
                   const BorderRadius.all(const Radius.circular(80.0))),
@@ -214,8 +239,8 @@ class _RegisterPageState extends State<RegisterPage> {
         ))),
         onPressed: () {
           // _validateUser();
-          
-              Navigator.push(
+
+          Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         },
         child: const Text("Iniciar sesion"));
@@ -327,9 +352,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Text(buttonMsg),
     );
-    
 
-    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -350,11 +373,11 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 20,
               ),
-             const Text("Fecha de nacimiento"),
+              const Text("Fecha de nacimiento"),
               dateF,
-            const  Text("Genero"),
+              const Text("Genero"),
               Row(children: [male, female]),
-            const  Text("Turismo"),
+              const Text("Turismo"),
               rel,
               gast,
               cult,
