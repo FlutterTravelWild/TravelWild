@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fluttertravelwild/pages/profile_page.dart';
 
 import 'package:fluttertravelwild/pages/splash_page.dart';
 
@@ -11,7 +12,6 @@ import 'firebase_options.dart';
 //   runApp(const MyApp());
 // }
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TravelWild',
-
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -37,11 +36,9 @@ class MyApp extends StatelessWidget {
         Locale('es', 'CO'),
       ],
       theme: ThemeData(
-
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.cyan,
       ),
       home: const Splash(),
- 
     );
   }
 }

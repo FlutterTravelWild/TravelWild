@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/models/Place.dart';
+import 'package:fluttertravelwild/pages/Login_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -29,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   String imageURL =
       "https://images.pexels.com/photos/12470916/pexels-photo-12470916.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
   Place placeLoad = Place.Empty();
-    double _rating = 3.0;
+  double _rating = 3.0;
 
   @override
   void initState() {
@@ -46,9 +48,7 @@ class _HomePageState extends State<HomePage> {
     // print(placeLoad.img);
   }
 
-
   Widget build(BuildContext context) {
-    
     final rating = RatingBar.builder(
         initialRating: 3,
         maxRating: 1,
@@ -126,6 +126,19 @@ class _HomePageState extends State<HomePage> {
     );
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
         title: Text(
           "TravelWild Colombia-Medellín",
           style: TextStyle(
@@ -149,8 +162,8 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 10,
               ),
-              rating
-                , const SizedBox(
+              rating,
+              const SizedBox(
                 height: 10,
               ),
               contenSection,
