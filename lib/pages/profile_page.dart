@@ -119,12 +119,12 @@ SingleChildScrollView _buildButtonColumn(UserApp.User userF) {
 
   String notval = "Not Value";
   String userName = profile.name ?? notval;
-  String tipoSangre = profile.typeS ?? "Not";
+  String tipoSangre = profile.typeS ?? notval;
   String email = profile.email ?? "Sin email";
-  String fechaNacimiento = profile.bornDate.toString() ?? "Not value";
+  String fechaNacimiento = profile.bornDate ?? notval;
   String datP = profile.favtypeT ?? notval;
   List<String> preferencias = (datP.split(' '));
-  print("PREEF");
+  // print("PREEF");
   preferencias.removeAt(0);
   print(preferencias);
   return SingleChildScrollView(
