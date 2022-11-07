@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertravelwild/models/Place.dart';
+import 'package:fluttertravelwild/data/PlacesApi.dart';
+import 'package:fluttertravelwild/models/Lugar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:convert';
+
 
 // import 'package:cached_network_image/cached_network_image.dart';
 
@@ -17,19 +19,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // String imageURL = "https://acortar.link/NLHDgR";
 
-  Place place = Place(
-      "",
-      "guatape",
-      "medellin",
-      "34",
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. In dignissimos iure, explicabo quibusdam mollitia molestias, ullam saepe beatae asperiores quas dicta rem soluta nihil praesentium sit culpa. Asperiores, at recusandae?",
-      "300",
-      "coorde",
-      "https://acortar.link/NLHDgR");
+  PlacesAPi dat = PlacesAPi();
+
+  // Place place = Place(
+  //     "",
+  //     "guatape",
+  //     "medellin",
+  //     "34",
+  //     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. In dignissimos iure, explicabo quibusdam mollitia molestias, ullam saepe beatae asperiores quas dicta rem soluta nihil praesentium sit culpa. Asperiores, at recusandae?",
+  //     "300",
+  //     "coorde",
+  //     "https://acortar.link/NLHDgR");
   String imageURL =
       "https://images.pexels.com/photos/12470916/pexels-photo-12470916.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
-  Place placeLoad = Place.Empty();
-    double _rating = 3.0;
+  // Place placeLoad = Place.Empty();
+  double _rating = 3.0;
 
   @override
   void initState() {
@@ -37,18 +41,16 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  _getPlace() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> userMap =
-        jsonDecode(prefs.getString("place")!); // ! quita null
-    // userLoad = "f" as User;
-    placeLoad = Place.fromJson(userMap);
-    // print(placeLoad.img);
-  }
-
+  // _getPlace() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   Map<String, dynamic> userMap =
+  //       jsonDecode(prefs.getString("place")!); // ! quita null
+  //   // userLoad = "f" as User;
+  //   placeLoad = Place.fromJson(userMap);
+  //   // print(placeLoad.img);
+  // }
 
   Widget build(BuildContext context) {
-    
     final rating = RatingBar.builder(
         initialRating: 3,
         maxRating: 1,
@@ -82,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Text(
-                  place.description,
+                  "descrip",
                   style: TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -117,13 +119,13 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _BuildTitlesection(Icons.place_rounded, "Ciudad:", place.name),
+          _BuildTitlesection(Icons.place_rounded, "Ciudad:", "nameplace"),
           _BuildTitlesection(Icons.sunny, "Departameto:", "Antioquia"),
-          _BuildTitlesection(
-              Icons.thermostat_rounded, "Temperatura:", place.temp),
+          _BuildTitlesection(Icons.thermostat_rounded, "Temperatura:", "value"),
         ],
       ),
     );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -141,16 +143,16 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text("Lugares"),
-              Image(
-                image: NetworkImage(place.img),
-                // width: 200,
-                //  imageURL != null ? NetworkImage(imageURL) : null
-              ),
+              // Image(
+              //   image: NetworkImage(""),
+              //   // width: 200,
+              //   //  imageURL != null ? NetworkImage(imageURL) : null
+              // ),
               const SizedBox(
                 height: 10,
               ),
-              rating
-                , const SizedBox(
+              rating,
+              const SizedBox(
                 height: 10,
               ),
               contenSection,
