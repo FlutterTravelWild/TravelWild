@@ -8,6 +8,7 @@ Desarrollador: [Breyner Ocampo Cardenas](https://github.com/BROC95)
 Analista:[Daniel Ernesto Galvis Reyes](https://github.com/daniel0326)
 Scrum Master:[Adriana Lucia Cadavid Tabares](https://github.com/adrianalcadavid5)
 Admistrador de DB:[Nicolas Perea Santos]( https://github.com/dedassds)
+Product Owner: [Kadir Fernando Obando Montúfar](https://github.com/kadir.obando)
 
 ## Getting Started
 
