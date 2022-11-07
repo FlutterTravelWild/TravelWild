@@ -137,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
         // _data =User(_name.text, _date, _email.text, Turismo, genre, _password.text);
         _data =
             "Nombre: ${_name.text}\n Sangre: ${_typeS.text} \n Email: ${_email.text} \n Genere: ${genre}\n TIpo de turismo:${Turismo}\n Fecha: ${_date} \n Password: ${_password.text}";
-        var user = User("", _name.text, _typeS.text, genre, _date, _email.text,
+        var user = User("", _name.text, _typeS.text, genre, _date, _email.text,Turismo,
             _password.text);
         print(_data);
 

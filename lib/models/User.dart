@@ -8,10 +8,12 @@ class User {
   var _genre;
   var _typeS;
   var _bornDate;
+  var _favtypeT;
 
   User(this._uid, this._name, this._typeS, this._genre, this._bornDate,
-      this._email, this._password);
+      this._email, this._favtypeT, this._password);
 
+  // User.Empty();
   User.Empty();
 // Per.fromJson
   User.fromJson(Map<String, dynamic> json)
@@ -21,7 +23,8 @@ class User {
         _password = json['password'],
         _genre = json['genre'],
         _typeS = json['typeS'],
-        _bornDate = json['bornDate'];
+        _favtypeT = json['tourism'],
+        _bornDate = json['borndate'];
 
   //  Map<String, dynamic> toJson() =>
   Map<String, dynamic> toJson() => {
@@ -31,12 +34,18 @@ class User {
         'password': _password,
         'genre': _genre,
         'typeS': _typeS,
+        'tourism': _favtypeT,
         'borndate': _bornDate
       };
 
   get name => _name;
   set name(value) {
     _name = value;
+  }
+
+  get favtypeT => _favtypeT;
+  set favtypeT(value) {
+    _favtypeT = value;
   }
 
   get email => _email;

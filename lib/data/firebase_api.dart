@@ -1,10 +1,12 @@
 // import 'dart:html';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:mislibros/models/book.dart';
 import 'package:fluttertravelwild/models/User.dart' as UserApp;
+
+import 'dart:convert';
 
 // import 'package:flutter/material.dart';
 //  Auth with try catch
@@ -59,6 +61,33 @@ class FirebaseApi {
     }
   }
 
+  Future<UserApp.User?> getUser(UserApp.User user) async {
+    try {
+      final document =
+          // await FirebaseFirestore.instance.collection("users").add(user.toJson());
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .get();
+      // UserApp.User retU = UserApp.User.Empty();
+      print("Query");
+      print(user.uid);
+      print(document.data());
+      print("Exit");
+      // Persona per = Persona.fromJson(document.get());
+      UserApp.User d = UserApp.User.Empty();
+      var dat = document.data();
+
+      // jsonDecode(dat);
+
+      return UserApp.User.fromJson(dat!);
+    } on FirebaseException catch (e) {
+      print("FirebaseException  ${e.code}");
+      Map<String, dynamic> dat = {'Error': e.code};
+      // return user.toJson();
+      return UserApp.User.Empty();
+    }
+  }
 // createBook
   // Future<String> createBook(Book book) async {
   //   try {

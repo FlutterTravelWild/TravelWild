@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/firebase_api.dart';
-import 'package:fluttertravelwild/pages/HomePage.dart';
+// import 'package:fluttertravelwild/pages/HomePage.dart';
+import 'package:fluttertravelwild/pages/profile_page.dart';
 import 'package:fluttertravelwild/pages/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,8 +84,8 @@ class _LoginPageState extends State<LoginPage> {
         msg = "connection success";
         print("entro");
         print(result);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ProfilePage()));
       }
       _showMsg(msg);
     }

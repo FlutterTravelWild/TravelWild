@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/PlacesApi.dart';
-import 'package:fluttertravelwild/pages/LandingPage.dart';
+import 'package:fluttertravelwild/pages/DetailPage.dart';
 
 import '../models/place.dart';
 
@@ -27,14 +27,10 @@ class _ListplacePageState extends State<ListplacePage> {
 
     setState(() {
       resultsFuture.place?.forEach((element) {
-        // print("ele: $element");
+
         listMovie.add(element);
       });
-      // print(resultsFuture.Place);
-      // print("object");
-      // print(listMovie.length);
 
-      // print(listMovie);
     });
   }
 
@@ -59,15 +55,23 @@ class _ListplacePageState extends State<ListplacePage> {
                           var text = Text(movie.barrio ?? "Not title");
                           var text2 =
                               Text(movie.tipoatractivo ?? "Not describe");
-                          var img = Image.network(
+                          var img =ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(20), // Image border
+                            child: SizedBox.fromSize(
+                              size: Size.fromRadius(48), // Image radius
+                              child: Image.network(
                             movie.imagen ?? "",
                             errorBuilder: (BuildContext context,
                                 Object exception, StackTrace? stackTrace) {
                               return const Image(
-                                  image:
-                                      AssetImage('assets/img/beorchoose.png'));
+                                  image: AssetImage('assets/img/baggage.png'));
                             },
+                          fit: BoxFit.cover)
+                                ,
+                            ),
                           );
+
                           return Card(
                             child: ListTile(
                               title: text,
@@ -78,7 +82,7 @@ class _ListplacePageState extends State<ListplacePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailMovie(movie)));
+                                            DetailPlace(movie)));
                               },
                             ),
                           );
