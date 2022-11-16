@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertravelwild/pages/Login_page.dart';
+import 'package:fluttertravelwild/pages/home_page.dart';
 import 'package:fluttertravelwild/pages/profile_page.dart';
 
 class Splash extends StatefulWidget {
-  // const Splash({super.key});
+  
   const Splash({Key? key}) : super(key: key);
 
   @override
@@ -18,12 +19,6 @@ class _SplashState extends State<Splash> {
     _closeSplash();
     super.initState();
   }
-  // Future<void> _closeSplash() async {
-  //   Future.delayed(const Duration(seconds: 3), () async {
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => LoginPage()));
-  //   });
-  // }
 
   Future<void> _closeSplash() async {
     Future.delayed(const Duration(seconds: 2), () async {
@@ -34,7 +29,7 @@ class _SplashState extends State<Splash> {
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
@@ -53,10 +48,7 @@ class _SplashState extends State<Splash> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // Text("WildTravel",
-                  // style:TextStyle(
-                  //   fontWeight: FontWeight.bold,
-                  //   fontSize: 30,color: Colors.cyan))
+          
                 ],
               ),
             )));

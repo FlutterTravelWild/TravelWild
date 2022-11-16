@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/firebase_api.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertravelwild/pages/login_page.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'dart:convert';
+
 import '../models/User.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -89,14 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _registerUser(User user) async {
-    //  local store
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.setString("user", jsonEncode(user));
-    // // print("SaveUser");
-    // String json = jsonEncode(user);
 
-    // print(json);
-    // Firebase
     var result = await _firebaseApi.registerUser(user.email, user.password);
     String msg = "";
     if (result == "invalid-email") {
@@ -133,8 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (_parquestematicos) Turismo = "$Turismo parques";
         if (_gastronomico) Turismo = "$Turismo gastrónomico";
 
-        // _data =    "Nombre: ${_name.text} \n Email: ${_email.text} \n Genere: ${genre}\n Genere Favo:${Turismo}\n naci: ${_date}";
-        // _data =User(_name.text, _date, _email.text, Turismo, genre, _password.text);
+
         _data =
             "Nombre: ${_name.text}\n Sangre: ${_typeS.text} \n Email: ${_email.text} \n Genere: ${genre}\n TIpo de turismo:${Turismo}\n Fecha: ${_date} \n Password: ${_password.text}";
         var user = User("", _name.text, _typeS.text, genre, _date, _email.text,Turismo,
@@ -199,10 +190,10 @@ class _RegisterPageState extends State<RegisterPage> {
         keyboardType: TextInputType.visiblePassword,
         obscureText: _passwordVisible,
         decoration: InputDecoration(
-          icon: Icon(Icons.lock_open_outlined),
-          border: OutlineInputBorder(
+          icon:const Icon(Icons.lock_open_outlined),
+          border:const OutlineInputBorder(
               borderRadius:
-                  const BorderRadius.all(const Radius.circular(80.0))),
+                   BorderRadius.all( Radius.circular(80.0))),
           hintText: 'Password',
           suffix: InkWell(
             onTap: _togglePasswordView,
@@ -216,18 +207,13 @@ class _RegisterPageState extends State<RegisterPage> {
         controller: _reppassword,
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration:const InputDecoration(
           icon: Icon(Icons.lock_outline),
           border: OutlineInputBorder(
               borderRadius:
-                  const BorderRadius.all(const Radius.circular(80.0))),
+                   BorderRadius.all( Radius.circular(80.0))),
           hintText: 'Password repeat',
-          // suffix: InkWell(
-          //   onTap: _togglePasswordView,
-          //   child: Icon(
-          //     _passwordVisible ? Icons.visibility_off : Icons.visibility,
-          //   ),
-          // ),
+     
         ));
 
     final loginBtn = ElevatedButton(

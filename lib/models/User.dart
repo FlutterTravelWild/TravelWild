@@ -10,7 +10,7 @@ class User {
   var _bornDate;
   var _favtypeT;
 
-  User(this._uid, this._name, this._typeS, this._genre, this._bornDate,
+  User(this._uid,this._name, this._typeS, this._genre, this._bornDate,
       this._email, this._favtypeT, this._password);
 
   // User.Empty();

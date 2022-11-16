@@ -3,21 +3,54 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertravelwild/models/place.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertravelwild/pages/fav_place_page.dart';
+import 'package:fluttertravelwild/pages/map_page.dart';
+import 'package:fluttertravelwild/pages/places_pages.dart';
+import 'package:fluttertravelwild/pages/profile_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // import 'package:moviedb/model/result.dart';
 
-class DetailPlace extends StatelessWidget {
+class DetailPlace extends StatefulWidget {
   final Place1 place;
-  
+
   // const DetailMovie({super.key});
   const DetailPlace(this.place);
 
   @override
-  Widget build(BuildContext context) {
-double _rating = 3.0;
+  State<DetailPlace> createState() => _DetailPlaceState();
+}
 
-String description = '''Hermoso lugar llamado ${place.nombresitio}, ubicado en 
-el  barrio ${place.barrio} con dirección  ${place.direccion}  en la comuna  ${place.comuna}  es un atractivo
- tipo  ${place.tipoatractivo}, no te  lo puedes perder.''';
+class _DetailPlaceState extends State<DetailPlace> {
+  var isFavorite = false;
+
+  void _onFavoritesButtonClicked() async {
+    // box.add(localBook);
+    // if (isFavorite) {
+    //   box.delete(localBook.id);
+    // } else {
+    //   box.put(localBook.id, localBook);
+    // }
+
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  void _mapaClicked() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => MapPage()));
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double _rating = 3.0;
+
+    String description =
+        '''Hermoso lugar llamado ${widget.place.nombresitio}, ubicado en 
+el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en la comuna  ${widget.place.comuna}  es un atractivo
+ tipo  ${widget.place.tipoatractivo}, no te  lo puedes perder.''';
     final rating = RatingBar.builder(
         initialRating: 3,
         maxRating: 1,
@@ -41,16 +74,15 @@ el  barrio ${place.barrio} con dirección  ${place.direccion}  en la comuna  ${p
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /*2*/
-                 Container(
+                Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    place.nombresitio.toString(),
+                    widget.place.nombresitio.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-                  ,
+                ),
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
@@ -60,8 +92,8 @@ el  barrio ${place.barrio} con dirección  ${place.direccion}  en la comuna  ${p
                     ),
                   ),
                 ),
-                Text(description
-                ,
+                Text(
+                  description,
                   style: TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -96,61 +128,76 @@ el  barrio ${place.barrio} con dirección  ${place.direccion}  en la comuna  ${p
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _BuildTitlesection(Icons.place_rounded, "Ciudad:","Medellin" ),
+          _BuildTitlesection(Icons.place_rounded, "Ciudad:", "Medellin"),
           _BuildTitlesection(Icons.sunny, "Departameto:", "Antioquia"),
-          _BuildTitlesection(Icons.thermostat_rounded, "Temperatura:", "27.3  ºC"),
+          _BuildTitlesection(
+              Icons.thermostat_rounded, "Temperatura:", "27.3  ºC"),
         ],
       ),
     );
 
+    // widget itemFav =
+
     return Scaffold(
       // appBar: AppBar(title: Text(place.tipoatractivo ?? "Detalle")),
-      appBar: AppBar(title: Text(
-          "TravelWild Colombia-Medellín",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        )),
+      appBar: AppBar(
+          title: Text(
+        "TravelWild Colombia-Medellín",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      )),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         child: SingleChildScrollView(
-          child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children:<Widget> [
-            Image.network(
-              place.imagen ?? "",
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return const Image(
-                    image: AssetImage('assets/img/baggage'));
-              },
-            ),
-                 const SizedBox(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Image.network(
+                  widget.place.imagen ?? "",
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return const Image(image: AssetImage('assets/img/baggage'));
+                  },
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 rating,
                 const SizedBox(
                   height: 10,
                 ),
-           
-           
-            contenSection,
-            titleSection,
-            buttonSection,
-            
-   
-            
-     ]),
+                _buildItem(
+                    isFavorite,
+                    Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+                    Colors.red,
+                    () => _onFavoritesButtonClicked()),
+                contenSection,
+                titleSection,
+                _buildItem(isFavorite, Icon(Icons.map), Colors.grey,
+                    () => _mapaClicked()),
+              ]),
         ),
       ),
     );
-
-
-
   }
-
-
-  
 }
 
+Row _buildItem(isFavorite, icon, color, _ButtonClicked()) {
+  return Row(
+    children: [
+      Expanded(
+          child: IconButton(
+        alignment: Alignment.topRight,
+        icon: icon,
+        color: color,
+        onPressed: (() {
+          _ButtonClicked();
+        }),
+      ))
+    ],
+  );
+}
 
 Column _buildButtonColumn(Color color, IconData icon, String label) {
   return Column(

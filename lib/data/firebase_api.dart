@@ -1,14 +1,14 @@
-// import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-// import 'package:mislibros/models/book.dart';
+
 import 'package:fluttertravelwild/models/User.dart' as UserApp;
 
-import 'dart:convert';
 
-// import 'package:flutter/material.dart';
+
+import 'package:fluttertravelwild/models/place.dart';
+
+
 //  Auth with try catch
 class FirebaseApi {
   //  Register
@@ -88,25 +88,23 @@ class FirebaseApi {
       return UserApp.User.Empty();
     }
   }
-// createBook
-  // Future<String> createBook(Book book) async {
-  //   try {
-  //     final uid = FirebaseAuth.instance.currentUser?.uid;
-  //     final document = FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(uid)
-  //         .collection('books')
-  //         .doc();
-  //     book.id = document.id;
-  //     final result = FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(uid)
-  //         .collection('books')
-  //         .doc(book.id)
-  //         .set(book.toJson());
-  //     return book.id;
-  //   } on FirebaseException catch (e) {
-  //     return e.code;
-  //   }
-  // }
+
+//  CreateUser
+  Future<String?> createPlace(Place1 place) async {
+    try {
+      final document =
+          // await FirebaseFirestore.instance.collection("users").add(user.toJson());
+          await FirebaseFirestore.instance
+              .collection("places")
+              .add(place.toJson());
+
+      return place.uid;
+    } on FirebaseException catch (e) {
+      print("FirebaseException  ${e.code}");
+
+      return e.code;
+    }
+  }
+
+ 
 }

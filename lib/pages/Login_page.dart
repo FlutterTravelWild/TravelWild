@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/firebase_api.dart';
-// import 'package:fluttertravelwild/pages/HomePage.dart';
-import 'package:fluttertravelwild/pages/profile_page.dart';
+import 'package:fluttertravelwild/pages/home_page.dart';
 import 'package:fluttertravelwild/pages/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,12 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     // _getUser();
     super.initState();
   }
-
-  // @override
-  // void initState() {
-  //   _getUser();
-  //   super.initState();
-  // }
   void _showMsg(String msg) {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(SnackBar(
@@ -45,24 +38,6 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  // void _validateUser() {
-  //   print("validate");
-  //   print("user email ${Userload.email}");
-  //   print("input email ${_email.text}");
-  //   print("User password ${Userload.password}");
-  //   print("inpur password ${_password.text}");
-  //   print("final");
-
-  //   if (_email.text == Userload.email && _password.text == Userload.password) {
-  //     print("hola");
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => const HomePage()));
-  //   } else {
-  //     //  Userload._showMsg("Contraseña invalida");
-  //     print("object");
-  //     _showMsg("Email or password incorrect");
-  //   }
-  // }
   void _validateUser() async {
     if (_email.text.isEmpty || _password.text.isEmpty) {
       _showMsg("Emply values");
@@ -85,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         print("entro");
         print(result);
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()));
+            MaterialPageRoute(builder: (context) => const HomePage()));
       }
       _showMsg(msg);
     }
@@ -107,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final logo = Image(
+    const logo = Image(
       image: AssetImage('assets/img/baggage.png'),
       width: 300,
       height: 150,
@@ -129,18 +104,12 @@ class _LoginPageState extends State<LoginPage> {
         controller: _password,
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration:const InputDecoration(
           icon: Icon(Icons.lock_open_outlined),
           border: OutlineInputBorder(
               borderRadius:
-                  const BorderRadius.all(const Radius.circular(80.0))),
+                   BorderRadius.all( Radius.circular(80.0))),
           hintText: 'Password',
-          // suffix: InkWell(
-          //   onTap: _togglePasswordView,
-          //   child: Icon(
-          //     _passwordVisible ? Icons.visibility_off : Icons.visibility,
-          //   ),
-          // ),
         ));
 
     final loginBtn = ElevatedButton(

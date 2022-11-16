@@ -1,23 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/firebase_api.dart';
+import 'package:fluttertravelwild/models/place.dart';
 
 
 import 'package:fluttertravelwild/pages/ListplacePage.dart';
 import 'package:fluttertravelwild/pages/Login_page.dart';
 import 'package:fluttertravelwild/models/User.dart' as UserApp;
+import 'package:fluttertravelwild/pages/places_pages.dart';
+import 'package:fluttertravelwild/pages/register_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
-  // final User user;
-
-  // const DetailMovie({super.key});
-  //  const ListplacePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePagePageState();
 }
-
+enum Menu { logOut }
 class _ProfilePagePageState extends State<ProfilePage> {
   var currentUser2 = FirebaseAuth.instance.currentUser;
   final FirebaseApi _firebaseApi = FirebaseApi();
@@ -41,43 +40,32 @@ class _ProfilePagePageState extends State<ProfilePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Mi perfil")),
         actions: [
-          IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.logout),
-          )
+           PopupMenuButton(
+              onSelected: (Menu item) {
+                setState(() {
+                  if (item == Menu.logOut) {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
+                  }
+                });
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                    const PopupMenuItem(
+                        value: Menu.logOut, child: Text("Cerrar")),
+                  ])
         ],
       ),
-      // body: SafeArea(
-      //   child: Container(
-      //     margin: const EdgeInsets.all(15),
-      //     child: Body(),
-      //   ),
-      // ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ListplacePage(),
-              ),
-            );
-          },
-          child: const Icon(
-            Icons.navigate_next,
-            color: Colors.white,
-          )),
+
 
       body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -89,21 +77,6 @@ class _ProfilePagePageState extends State<ProfilePage> {
                         itemCount: 1,
                         itemBuilder: (BuildContext context, index) {
                           UserApp.User profile = userF;
-
-                          // return Card(
-                          //   child: ListTile(
-                          //     title: text,
-                          //     subtitle: text2,
-                          //     // leading: img,
-                          //     onTap: () {
-                          //       // Navigator.push(
-                          //       //     context,
-                          //       //     MaterialPageRoute(
-                          //       //         builder: (context) =>
-                          //       //             DetailMovie(movie)));
-                          //     },
-                          //   ),
-                          // );
 
                           return _buildButtonColumn(userF);
                         }))
