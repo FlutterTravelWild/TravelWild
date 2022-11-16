@@ -174,7 +174,7 @@ el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en 
                     () => _onFavoritesButtonClicked()),
                 contenSection,
                 titleSection,
-                _buildItem(isFavorite, Icon(Icons.map), Colors.grey,
+                _buildItem(isFavorite, Icon(Icons.map, size: 20,), Colors.amber,
                     () => _mapaClicked()),
               ]),
         ),
