@@ -11,6 +11,8 @@ class ListplacePage extends StatefulWidget {
   State<ListplacePage> createState() => _ListplacePageState();
 }
 
+enum Menu { logOut }
+
 class _ListplacePageState extends State<ListplacePage> {
   final _parameter = TextEditingController();
   PlacesAPi _movieApi = PlacesAPi();
@@ -27,10 +29,8 @@ class _ListplacePageState extends State<ListplacePage> {
 
     setState(() {
       resultsFuture.place?.forEach((element) {
-
         listMovie.add(element);
       });
-
     });
   }
 
@@ -38,9 +38,6 @@ class _ListplacePageState extends State<ListplacePage> {
   Widget build(BuildContext context) {
     int nPlace = listMovie.length;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Medellin ${nPlace} POI"),
-      ),
       body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: Center(
@@ -55,20 +52,19 @@ class _ListplacePageState extends State<ListplacePage> {
                           var text = Text(movie.barrio ?? "Not title");
                           var text2 =
                               Text(movie.tipoatractivo ?? "Not describe");
-                          var img =ClipRRect(
+                          var img = ClipRRect(
                             borderRadius:
                                 BorderRadius.circular(20), // Image border
                             child: SizedBox.fromSize(
                               size: Size.fromRadius(48), // Image radius
-                              child: Image.network(
-                            movie.imagen ?? "",
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
-                              return const Image(
-                                  image: AssetImage('assets/img/baggage.png'));
-                            },
-                          fit: BoxFit.cover)
-                                ,
+                              child: Image.network(movie.imagen ?? "",
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                return const Image(
+                                    image:
+                                        AssetImage('assets/img/baggage.png'));
+                              }, fit: BoxFit.cover),
                             ),
                           );
 

@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/data/firebase_api.dart';
 
-
 import 'package:fluttertravelwild/pages/ListplacePage.dart';
 import 'package:fluttertravelwild/pages/Login_page.dart';
 import 'package:fluttertravelwild/models/User.dart' as UserApp;
+import 'package:fluttertravelwild/pages/home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class _ProfilePagePageState extends State<ProfilePage> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const ListplacePage(),
+                builder: (context) => const HomePage(),
               ),
             );
           },
@@ -165,16 +165,15 @@ class Saludo extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          const Text("Bienvenido", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold )),
+          const Text("Bienvenido",
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           Container(
             child: Image.asset('assets/img/usuario.png'),
             height: 200,
           ),
           AppText(
             text: nombre,
-          
           )
-        
         ],
       ),
     );

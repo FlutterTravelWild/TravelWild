@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fluttertravelwild/models/local_sities.dart';
 // import 'package:fluttertravelwild/pages/profile_page.dart';
 // import 'package:fluttertravelwild/pages/HomePage.dart';
 // import 'package:fluttertravelwild/pages/ListplacePage.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertravelwild/pages/splash_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
 
 // void main() {
@@ -20,10 +23,14 @@ import 'firebase_options.dart';
 
 //   runApp(const MyApp());
 // }
-void main() async {
-
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalSitiesAdapter());
+
+  await Hive.openBox<LocalSities>('favorites');
 
   runApp(const MyApp());
 }
@@ -49,7 +56,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
       ),
       home: const Splash(),
- 
     );
   }
 }

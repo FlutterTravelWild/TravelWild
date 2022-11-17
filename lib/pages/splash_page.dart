@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertravelwild/pages/Login_page.dart';
+import 'package:fluttertravelwild/pages/home_page.dart';
 import 'package:fluttertravelwild/pages/profile_page.dart';
 
 class Splash extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashState extends State<Splash> {
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
