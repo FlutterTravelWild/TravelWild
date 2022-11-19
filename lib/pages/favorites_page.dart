@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/models/local_sities.dart';
 import 'package:fluttertravelwild/models/place.dart';
 import 'package:fluttertravelwild/pages/DetailPage.dart';
+import 'package:fluttertravelwild/pages/home_page.dart';
 import 'package:fluttertravelwild/pages/places_pages.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -64,7 +65,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PlaceStorePage()));
+                          builder: (context) => HomePage()));
                 },
               ));
             },
