@@ -1,14 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertravelwild/boxes.dart';
+import 'package:fluttertravelwild/models/local_sities.dart';
 import 'package:fluttertravelwild/models/place.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:fluttertravelwild/pages/fav_place_page.dart';
+import 'package:fluttertravelwild/pages/LocationApp.dart';
+import 'package:fluttertravelwild/pages/Login_page.dart';
+import 'package:fluttertravelwild/pages/location.dart';
 import 'package:fluttertravelwild/pages/map_page.dart';
-import 'package:fluttertravelwild/pages/places_pages.dart';
-import 'package:fluttertravelwild/pages/profile_page.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 // import 'package:moviedb/model/result.dart';
 
 class DetailPlace extends StatefulWidget {
@@ -22,35 +21,80 @@ class DetailPlace extends StatefulWidget {
 }
 
 class _DetailPlaceState extends State<DetailPlace> {
-  var isFavorite = false;
 
-  void _onFavoritesButtonClicked() async {
-    // box.add(localBook);
-    // if (isFavorite) {
-    //   box.delete(localBook.id);
-    // } else {
-    //   box.put(localBook.id, localBook);
-    // }
 
-    setState(() {
-      isFavorite = !isFavorite;
-    });
+  final box = Boxes.getFavoritesBox();
+
+  bool isSaved = false;
+
+  void _onFavoritesButtonClicked() {
+    var localPlace = LocalSities()
+      ..description = generateDescription()
+      ..imageLink = widget.place.imagen
+      ..id = widget.place.nombresitio
+      ..name = widget.place.nombresitio;
+
+    bool isPresent = checkIfSaved(localPlace.name!);
+
+    if (isPresent) {
+      print("The place is already saved ${widget.place.nombresitio}");
+    } else {
+      print("Adding place to the box with name ${widget.place.nombresitio}");
+      box.add(localPlace);
+
+      setState(() {
+        isSaved = true;
+      });
+    }
   }
 
-  void _mapaClicked() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MapPage()));
+  void _onRemoveFavoritesButtonClicked() {
+    bool isPresent = false;
+    dynamic placeKey;
 
+    box.values.forEach(
+      (place) {
+        if (place.name == widget.place.nombresitio) {
+          isPresent = true;
+          placeKey = place.key;
+        }
+      },
+    );
+
+    if (isPresent) {
+      print("Deliting place with name ${widget.place.nombresitio}");
+      box.delete(placeKey);
+      setState(() {
+        isSaved = false;
+      });
+    }
+  }
+
+  bool checkIfSaved(String name) {
+    bool isPresent = false;
+    box.values.forEach(
+      (place) {
+        if (place.name == name) {
+          isPresent = true;
+        }
+      },
+    );
+
+    return isPresent;
+  }
+
+  String generateDescription() {
+    return '''Hermoso lugar llamado ${widget.place.nombresitio}, ubicado en 
+el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en la comuna  ${widget.place.comuna}  es un atractivo
+ tipo  ${widget.place.tipoatractivo}, no te  lo puedes perder.''';
   }
 
   @override
   Widget build(BuildContext context) {
     double _rating = 3.0;
 
-    String description =
-        '''Hermoso lugar llamado ${widget.place.nombresitio}, ubicado en 
-el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en la comuna  ${widget.place.comuna}  es un atractivo
- tipo  ${widget.place.tipoatractivo}, no te  lo puedes perder.''';
+    isSaved = checkIfSaved(widget.place.nombresitio!);
+
     final rating = RatingBar.builder(
         initialRating: 3,
         maxRating: 1,
@@ -93,7 +137,7 @@ el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en 
                   ),
                 ),
                 Text(
-                  description,
+                  generateDescription(),
                   style: TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -116,9 +160,9 @@ el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(color, Icons.call, 'CALL'),
-          _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
-          _buildButtonColumn(color, Icons.share, 'SHARE'),
+          _buildButtonColumn(context,widget.place),
+          // _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+          // _buildButtonColumn(color, Icons.share, 'SHARE'),
         ],
       ),
     );
@@ -135,8 +179,6 @@ el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en 
         ],
       ),
     );
-
-    // widget itemFav =
 
     return Scaffold(
       // appBar: AppBar(title: Text(place.tipoatractivo ?? "Detalle")),
@@ -167,55 +209,57 @@ el  barrio ${widget.place.barrio} con dirección  ${widget.place.direccion}  en 
                 const SizedBox(
                   height: 10,
                 ),
-                _buildItem(
-                    isFavorite,
-                    Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
-                    Colors.red,
-                    () => _onFavoritesButtonClicked()),
+                Row(
+                  children: [
+                    Expanded(
+                        child: isSaved
+                            ? IconButton(
+                                alignment: Alignment.topRight,
+                                icon: const Icon(Icons.favorite),
+                                color: Colors.red,
+                                onPressed: (() {
+                                  _onRemoveFavoritesButtonClicked();
+                                }),
+                              )
+                            : IconButton(
+                                alignment: Alignment.topRight,
+                                icon: const Icon(Icons.favorite_border),
+                                color: Colors.red,
+                                onPressed: (() {
+                                  _onFavoritesButtonClicked();
+                                }))),
+                  ],
+                ),
                 contenSection,
                 titleSection,
-                _buildItem(isFavorite, Icon(Icons.map, size: 20,), Colors.amber,
-                    () => _mapaClicked()),
+                buttonSection,
               ]),
-        ),
-      ),
+        ),  ),
+
     );
   }
 }
 
-Row _buildItem(isFavorite, icon, color, _ButtonClicked()) {
-  return Row(
-    children: [
-      Expanded(
-          child: IconButton(
-        alignment: Alignment.topRight,
-        icon: icon,
-        color: color,
-        onPressed: (() {
-          _ButtonClicked();
-        }),
-      ))
-    ],
-  );
-}
 
-Column _buildButtonColumn(Color color, IconData icon, String label) {
+
+Column _buildButtonColumn(context,place) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Icon(icon, color: color),
-      Container(
-        margin: const EdgeInsets.only(top: 8),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: color,
-          ),
-        ),
+
+
+         FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+          Navigator.pushReplacement(
+              // context, MaterialPageRoute(builder: (context) => LocationAppExample(place)));
+              context, MaterialPageRoute(builder: (context) => SimpleExample(place)) );
+        },
+        // backgroundColor: Colors.green,
+        child: const Icon(Icons.map),
       ),
+
     ],
   );
 }

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/pages/fav_place_page.dart';
+import 'package:fluttertravelwild/pages/favorites_page.dart';
 import 'package:fluttertravelwild/pages/places_pages.dart';
 import 'package:fluttertravelwild/pages/profile_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     pages = [];
     pages.add(ProfilePage());
     pages.add(PlaceStorePage());
-    pages.add(FavoritePlacePage());
+    pages.add(FavoritesPage());
   }
 
   void _onItemTapped(int page) {

@@ -10,11 +10,17 @@ import 'package:fluttertravelwild/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
+// import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:fluttertravelwild/models/local_sities.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalSitiesAdapter());
+
+  await Hive.openBox<LocalSities>('favorites');
 
   runApp(const MyApp());
 }
