@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertravelwild/models/local_sities.dart';
+import 'package:fluttertravelwild/models/place.dart';
+import 'package:fluttertravelwild/pages/DetailPage.dart';
+import 'package:fluttertravelwild/pages/places_pages.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../boxes.dart';
@@ -12,9 +15,6 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +36,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             itemCount: sitiesBox.length,
             itemBuilder: (BuildContext context, int index) {
               final sities = sitiesBox[index];
-                    var img = ClipRRect(
+              var img = ClipRRect(
                 borderRadius: BorderRadius.circular(20), // Image border
                 child: SizedBox.fromSize(
                   size: Size.fromRadius(48), // Image radius
@@ -52,6 +52,20 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   child: ListTile(
                 leading: img,
                 title: Text(sities.name ?? "No title"),
+                onLongPress: () {
+                  setState(() {
+                    sities.delete();
+                  });
+                },
+                onTap: () {
+                  // Place1 place = Place1.empty();
+                  // place.nombresitio = sities.name;
+                  // place.imagen = sities.imageLink;
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlaceStorePage()));
+                },
               ));
             },
           );
