@@ -5,19 +5,52 @@
 # Colaboradores
 
 Desarrollador: [Breyner Ocampo Cardenas](https://github.com/BROC95)
+
 Analista:[Daniel Ernesto Galvis Reyes](https://github.com/daniel0326)
+
 Scrum Master:[Adriana Lucia Cadavid Tabares](https://github.com/adrianalcadavid5)
+
 Admistrador de DB:[Nicolas Perea Santos]( https://github.com/dedassds)
 
-## Getting Started
+## Demo
 
-This project is a starting point for a Flutter application.
+Screenshots of app final.
 
-A few resources to get you started if this is your first Flutter project:
+Splash 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Image text](/assets/splash.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Login
+
+![Image text](/assets/login.png)
+
+Register
+
+![Image text](/assets/regis.png)
+
+Home
+
+![Image text](/assets/home.png)
+
+Place
+
+![Image text](/assets/place.png)
+
+Detail 
+
+![Image text](/assets/detail.png)
+
+
+
+Favorite
+
+![Image text](/assets/fav.png)
+
+Map
+
+![Image text](/assets/map.png)
+
+
+Info
+
+![Image text](/assets/info.png)
